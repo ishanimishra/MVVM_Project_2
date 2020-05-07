@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/overviewFragment">
+    <fragment
+        android:id="@+id/overviewFragment"
+        android:name="com.example.mvvm_project.overview.OverviewFragment"
+        android:label="OverviewFragment"
+        tools:layout="@layout/overview_fragment">
+        <action
+            android:id="@+id/action_overviewFragment4_to_detailFragment4"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.mvvm_project.detail.DetailFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/detail_fragment"/>
+</navigation>

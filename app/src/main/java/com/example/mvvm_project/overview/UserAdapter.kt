@@ -5,13 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm_project.R
-import com.example.mvvm_project.bindImage
 import com.example.mvvm_project.models.UserDetails
 import kotlinx.android.synthetic.main.list.view.*
 
 class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    lateinit var users: List<UserDetails>
+    var users: List<UserDetails> = ArrayList<UserDetails>()
+        set(value) {
+            field = value
+        }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAdapter.UserViewHolder {
         return UserViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -37,7 +40,7 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         val imgUrl = view.imageView
 
         fun initialize(users: UserDetails) {
-            bindImage(imgUrl, users.owner.avatar_url)
+//            bindImage(imgUrl, users.owner.avatar_url)
             UserName.text = "Name: " + users.name
             UserLogin.text = "Login: " + users.owner.login
             UserDescription.text = "Description: " + users.description

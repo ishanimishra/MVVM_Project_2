@@ -21,6 +21,8 @@ class PagedDataSrc(private val scope: CoroutineScope) : PageKeyedDataSource<Int,
                 when {
 //have to implement
                 }
+            }catch (e : Exception) {
+
             }
         }
     }

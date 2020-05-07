@@ -15,7 +15,6 @@ import com.example.mvvm_project.models.UserDetails
 class OverviewFragment : Fragment() {
 
     private lateinit var adapter: UserAdapter
-    lateinit var overviewViewModel: OverviewViewModel
 
     companion object {
         fun newInstance() = OverviewFragment()
@@ -30,21 +29,23 @@ class OverviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.overview_fragment, container, false)
-        adapter = UserAdapter()
-        viewModel.display(list = UserDetails)
-
-        overviewViewModel.getItems().observe(this, Observer { UserAdapter. }) //list
-
         val rv = view?.findViewById<RecyclerView>(R.id.recyclerView_list)
-        rv?.adapter = UserAdapter()
-        return view
+        adapter = UserAdapter()
+        rv?.adapter = adapter
 
+        viewModel.getItems().observe(viewLifecycleOwner, Observer {
+            //Callback received only some data present
+            adapter.users = it
+            adapter.notifyDataSetChanged()
+        })
+
+        return view
     }
 
-//    override fun onActivityCreated(savedInstanceState: Bundle?) {
-//        super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProviders.of(this).get(OverviewViewModel::class.java)
-//        // TODO: Use the ViewModel
-//    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.getUserProperties()
+
+    }
 
 }

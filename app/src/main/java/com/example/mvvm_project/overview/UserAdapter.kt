@@ -9,7 +9,7 @@ import com.example.mvvm_project.R
 import com.example.mvvm_project.models.UserDetails
 import kotlinx.android.synthetic.main.list.view.*
 
-class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter(var clickListener: OverviewFragment) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     var users: List<UserDetails> = ArrayList<UserDetails>()
         set(value) {
@@ -30,9 +30,11 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     override fun onBindViewHolder(holder: UserAdapter.UserViewHolder, position: Int) {
         val user = users[position]
-        holder.initialize(user)
+        holder.initialize(user, clickListener)
 
         Glide.with(holder.view.context).load(user.owner.avatar_url).into(holder.view.imageView)
+
+        //holder.view.setOnClickListener {  }
     }
 
 
@@ -42,14 +44,22 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         val UserDescription = view.description
         val imgUrl = view.imageView
 
-        fun initialize(users: UserDetails) {
+        fun initialize(users: UserDetails, action: OverviewFragment) {
 //            bindImage(imgUrl, users.owner.avatar_url)
             UserName.text = "Name: " + users.name
             UserLogin.text = "Login: " + users.owner.login
             UserDescription.text = "Description: " + users.description
 
+            itemView.setOnClickListener {
+                action.onItemClick(users, adapterPosition)
+            }
+
         }
 
     }
+}
+
+interface  onUserClickListener {
+    fun onItemClick(item: UserDetails, position: Int)
 }
 

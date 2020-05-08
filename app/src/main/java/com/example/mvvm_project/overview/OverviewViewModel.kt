@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class OverviewViewModel : ViewModel() {
+class OverviewViewModel : ViewModel(), onUserClickListener {
 
     val usersLiveData = MutableLiveData<List<UserDetails>>()
 
@@ -66,4 +66,7 @@ class OverviewViewModel : ViewModel() {
     }
 
     fun getItems() : LiveData<List<UserDetails>> = usersLiveData
+    override fun onItemClick(item: UserDetails, position: Int) {
+
+    }
 }

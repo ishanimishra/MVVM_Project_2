@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mvvm_project.R
 import com.example.mvvm_project.models.UserDetails
 import kotlinx.android.synthetic.main.list.view.*
@@ -30,6 +31,8 @@ class UserAdapter() : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     override fun onBindViewHolder(holder: UserAdapter.UserViewHolder, position: Int) {
         val user = users[position]
         holder.initialize(user)
+
+        Glide.with(holder.view.context).load(user.owner.avatar_url).into(holder.view.imageView)
     }
 
 

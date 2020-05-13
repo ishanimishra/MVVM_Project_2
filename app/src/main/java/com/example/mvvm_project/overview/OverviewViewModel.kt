@@ -38,9 +38,6 @@ class OverviewViewModel : ViewModel(), onUserClickListener {
 //            .build()
     }
 
-    /**
-     * Sets the value of the status LiveData to the Mars API status.
-     */
     public fun getUserProperties() {
 
         coroutineScope.launch {

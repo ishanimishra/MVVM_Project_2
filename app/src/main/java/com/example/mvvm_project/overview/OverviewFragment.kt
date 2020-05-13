@@ -1,6 +1,5 @@
 package com.example.mvvm_project.overview
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mvvm_project.R
@@ -60,7 +59,9 @@ class OverviewFragment : Fragment() {
 
     fun onItemClick(users: UserDetails, adapterPosition: Int) {
         Toast.makeText(context,users.name,Toast.LENGTH_SHORT).show()
-        view?.let { Navigation.findNavController(it).navigate(R.id.action_overviewFragment4_to_detailFragment4) }
+        val directions = OverviewFragmentDirections.actionOverviewFragmentToDetailFragment(users)
+        view?.findNavController()?.navigate(directions)
+        //view?.let { Navigation.findNavController(it).navigate(R.id.action_overviewFragment4_to_detailFragment4) }
     }
 
 }

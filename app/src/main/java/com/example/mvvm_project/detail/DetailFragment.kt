@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.navArgs
 import androidx.paging.PagedList
 import androidx.viewpager.widget.ViewPager
 
 import com.example.mvvm_project.R
-import com.example.mvvm_project.databinding.DetailFragmentBinding
 import com.example.mvvm_project.models.UserDetails
 import com.example.mvvm_project.overview.OverviewViewModel
 
@@ -36,11 +34,12 @@ class DetailFragment : Fragment() {
 
 
         val users = arguments?.let { DetailFragmentArgs.fromBundle(it).selected }
-        val detailViewModelFactory = application?.let {
-            if (users != null) {
-                DetailViewModelFactory(users, it)
-            }
-        }
+        val detailViewModelFactory = DetailViewModelFactory(users, application)
+//        val detailViewModelFactory = application?.let {
+//            if (users != null) {
+//                DetailViewModelFactory(users, it)
+//            }
+//        }
         detailViewModel = ViewModelProviders.of(this, detailViewModelFactory).get(DetailViewModel::class.java)
         sharedModel = activity.run { ViewModelProviders.of(this!!).get(OverviewViewModel::class.java) }
 

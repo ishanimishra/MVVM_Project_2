@@ -24,6 +24,7 @@ class DetailFragment : Fragment() {
     private lateinit var viewPager: ViewPager
     private lateinit var pagerAdapter: FragmentPagerAdapter
     private lateinit var sharedModel: OverviewViewModel
+    private var userDetail: UserDetails? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,8 +35,8 @@ class DetailFragment : Fragment() {
         val application = activity?.application
 
 
-        val users = arguments?.let { DetailFragmentArgs.fromBundle(it).selected }
-        val detailViewModelFactory = DetailViewModelFactory(users, application)
+        userDetail = arguments?.let { DetailFragmentArgs.fromBundle(it).selected }
+        val detailViewModelFactory = DetailViewModelFactory(userDetail, application!!)
 //        val detailViewModelFactory = application?.let {
 //            if (users != null) {
 //                DetailViewModelFactory(users, it)
@@ -50,14 +51,17 @@ class DetailFragment : Fragment() {
         })
 
         //detailViewModel.setList(sharedModel.usersLiveData.value as PagedList<UserDetails>)
-
+        var arrayList = ArrayList<UserDetails>()
+        arrayList.add(userDetail!!)
         viewPager = view.findViewById(R.id.viewPager)
-        detailViewModel.pagedList.observe(viewLifecycleOwner, Observer {
-            pagerAdapter = FragmentPagerAdapter(it)
-            viewPager.adapter = pagerAdapter
-            pagerAdapter.notifyDataSetChanged()
-            viewPager.currentItem = detailViewModel.getSelectedValue()
-        })
+//        pagerAdapter = FragmentPagerAdapter(arrayList)
+        viewPager.adapter = pagerAdapter
+        pagerAdapter.notifyDataSetChanged()
+        viewPager.currentItem = detailViewModel.getSelectedValue()
+
+//        detailViewModel.pagedList.observe(viewLifecycleOwner, Observer {
+//
+//        })
         //pagerAdapter = FragmentPagerAdapter(detailViewModel.pagedList.value!!)
         //user can swipe to see other repo details now
         return view

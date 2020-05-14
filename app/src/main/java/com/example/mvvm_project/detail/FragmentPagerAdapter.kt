@@ -22,7 +22,7 @@ class FragmentPagerAdapter(val users: PagedList<UserDetails>) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view = LayoutInflater.from(container.context)
-            .inflate(R.layout.detail_fragment, container, false)
+            .inflate(R.layout.detail_item_view, container, false)
 
         users.loadAround(position)
 
@@ -32,7 +32,6 @@ class FragmentPagerAdapter(val users: PagedList<UserDetails>) : PagerAdapter() {
         Glide.with(container.context).load(imgURL).into(imgView)
 
         //loading remaining
-
         val name1 = view.findViewById<TextView>(R.id.name)
         name1.text = "Name : " + users[position]?.name
 

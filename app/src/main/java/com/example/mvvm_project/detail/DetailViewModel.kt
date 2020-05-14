@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
 import com.example.mvvm_project.models.UserDetails
 
-class DetailViewModel(userDetails : UserDetails, application: Application) : AndroidViewModel(application) {
+class DetailViewModel(userDetails : UserDetails?, application: Application) : ViewModel() {
 
     private val _position = MutableLiveData<Int>()
     val position: LiveData<Int>

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
@@ -61,7 +62,8 @@ class OverviewFragment : Fragment() {
         Toast.makeText(context,users.name,Toast.LENGTH_SHORT).show()
         val directions = OverviewFragmentDirections.actionOverviewFragmentToDetailFragment(users)
         view?.findNavController()?.navigate(directions)
-        //view?.let { Navigation.findNavController(it).navigate(R.id.action_overviewFragment4_to_detailFragment4) }
+
+//        view?.let { Navigation.findNavController(it).navigate(R.id.action_overviewFragment_to_detailFragment ) }
     }
 
 }

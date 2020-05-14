@@ -30,11 +30,9 @@ class UserAdapter(var clickListener: OverviewFragment) : RecyclerView.Adapter<Us
 
     override fun onBindViewHolder(holder: UserAdapter.UserViewHolder, position: Int) {
         val user = users[position]
-        holder.initialize(user, clickListener)
+        holder.initialize(users, clickListener, position)
 
         Glide.with(holder.view.context).load(user.owner.avatar_url).into(holder.view.imageView)
-
-        //holder.view.setOnClickListener {  }
     }
 
 
@@ -44,11 +42,11 @@ class UserAdapter(var clickListener: OverviewFragment) : RecyclerView.Adapter<Us
         val UserDescription = view.description
         val imgUrl = view.imageView
 
-        fun initialize(users: UserDetails, action: OverviewFragment) {
-//            bindImage(imgUrl, users.owner.avatar_url)
-            UserName.text = "Name: " + users.name
-            UserLogin.text = "Login: " + users.owner.login
-            UserDescription.text = "Description: " + users.description
+        fun initialize(users: List<UserDetails>, action: OverviewFragment, position: Int) {
+            val user = users[position]
+            UserName.text = "Name: " + user.name
+            UserLogin.text = "Login: " + user.owner.login
+            UserDescription.text = "Description: " + user.description
 
             itemView.setOnClickListener {
                 action.onItemClick(users, adapterPosition)
@@ -60,6 +58,6 @@ class UserAdapter(var clickListener: OverviewFragment) : RecyclerView.Adapter<Us
 }
 
 interface  onUserClickListener {
-    fun onItemClick(item: UserDetails, position: Int)
+    fun onItemClick(users: List<UserDetails>, position: Int)
 }
 

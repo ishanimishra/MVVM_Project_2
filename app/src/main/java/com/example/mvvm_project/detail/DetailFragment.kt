@@ -1,18 +1,18 @@
 package com.example.mvvm_project.detail
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.viewpager.widget.ViewPager
-
 import com.example.mvvm_project.R
 import com.example.mvvm_project.models.UserDetails
 import com.example.mvvm_project.overview.OverviewViewModel
+
 
 class DetailFragment : Fragment() {
 
@@ -24,7 +24,6 @@ class DetailFragment : Fragment() {
     private lateinit var viewPager: ViewPager
     private lateinit var pagerAdapter: FragmentPagerAdapter
     private lateinit var sharedModel: OverviewViewModel
-    private var userDetail: UserDetails? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,35 +33,21 @@ class DetailFragment : Fragment() {
         val view = inflater.inflate(R.layout.detail_fragment, container, false)
         val application = activity?.application
 
+        //fetching arguments sent from overview fragment in bundle
+        val userList = requireArguments().getParcelableArrayList<UserDetails>("key")
+        val pos = requireArguments().getInt("position")
 
-        userDetail = arguments?.let { DetailFragmentArgs.fromBundle(it).selected }
-        val detailViewModelFactory = DetailViewModelFactory(userDetail, application!!)
-//        val detailViewModelFactory = application?.let {
-//            if (users != null) {
-//                DetailViewModelFactory(users, it)
-//            }
-//        }
+        val detailViewModelFactory = DetailViewModelFactory(userList, application!!)
+
         detailViewModel = ViewModelProviders.of(this, detailViewModelFactory).get(DetailViewModel::class.java)
         sharedModel = activity.run { ViewModelProviders.of(this!!).get(OverviewViewModel::class.java) }
 
-
-        sharedModel.getItems().observe(viewLifecycleOwner, Observer {
-            detailViewModel.setList(sharedModel.getItems().value as PagedList<UserDetails>)
-        })
-
-        //detailViewModel.setList(sharedModel.usersLiveData.value as PagedList<UserDetails>)
-        var arrayList = ArrayList<UserDetails>()
-        arrayList.add(userDetail!!)
         viewPager = view.findViewById(R.id.viewPager)
-//        pagerAdapter = FragmentPagerAdapter(arrayList)
+        pagerAdapter = FragmentPagerAdapter(userList!!)
         viewPager.adapter = pagerAdapter
+        viewPager.setCurrentItem(pos)
         pagerAdapter.notifyDataSetChanged()
-        viewPager.currentItem = detailViewModel.getSelectedValue()
 
-//        detailViewModel.pagedList.observe(viewLifecycleOwner, Observer {
-//
-//        })
-        //pagerAdapter = FragmentPagerAdapter(detailViewModel.pagedList.value!!)
         //user can swipe to see other repo details now
         return view
     }

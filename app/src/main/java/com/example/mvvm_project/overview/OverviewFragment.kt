@@ -55,15 +55,15 @@ class OverviewFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.getUserProperties()
-
     }
 
-    fun onItemClick(users: UserDetails, adapterPosition: Int) {
-        Toast.makeText(context,users.name,Toast.LENGTH_SHORT).show()
-        val directions = OverviewFragmentDirections.actionOverviewFragmentToDetailFragment(users)
-        view?.findNavController()?.navigate(directions)
-
-//        view?.let { Navigation.findNavController(it).navigate(R.id.action_overviewFragment_to_detailFragment ) }
+    fun onItemClick(users: List<UserDetails>, adapterPosition: Int) {
+        Toast.makeText(context,users[adapterPosition].name,Toast.LENGTH_SHORT).show()
+        //passing argument in bundle to detail fragment on click of list item
+        val bundle = Bundle()
+        bundle.putParcelableArrayList("key", ArrayList<UserDetails>(users))
+        bundle.putInt("position", adapterPosition)
+        //navigate to detail fragment
+        view?.let { Navigation.findNavController(it).navigate(R.id.action_overviewFragment_to_detailFragment , bundle) }
     }
-
 }

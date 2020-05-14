@@ -30,14 +30,6 @@ class OverviewViewModel : ViewModel(), onUserClickListener {
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    init {
-//        getUserProperties()
-//        val config = PagedList.Config.Builder()
-//            .setPageSize(100)
-//            .setEnablePlaceholders(false)
-//            .build()
-    }
-
     public fun getUserProperties() {
 
         coroutineScope.launch {
@@ -63,7 +55,6 @@ class OverviewViewModel : ViewModel(), onUserClickListener {
     }
 
     fun getItems() : LiveData<List<UserDetails>> = usersLiveData
-    override fun onItemClick(item: UserDetails, position: Int) {
 
-    }
+    override fun onItemClick(users: List<UserDetails>, position: Int) {}
 }

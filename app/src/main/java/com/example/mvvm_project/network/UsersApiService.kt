@@ -6,6 +6,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -27,6 +28,8 @@ interface UsersApiService {
     @GET("repositories")
     fun getProperties(@Query("since") since: Int):
             Deferred<List<UserDetails>>
+    // for response
+    // fun getP(@Query("since") since: Int) : Response<List<UserDetails>>
 }
 //a public object called UsersApi to expose the Retrofit service to the rest of the app
 object UsersApi {

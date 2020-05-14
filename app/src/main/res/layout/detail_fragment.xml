@@ -5,10 +5,6 @@
 
     <data>
 
-        <!--        <variable-->
-        <!--            name="model"-->
-        <!--            type="com.example.hsiangyuchen.databindingexample.UserProfileModel" />-->
-
         <variable
             name="viewModel"
             type="com.example.mvvm_project.detail.DetailViewModel" />

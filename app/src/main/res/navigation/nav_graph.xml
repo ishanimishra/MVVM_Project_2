@@ -18,8 +18,8 @@
         android:name="com.example.mvvm_project.detail.DetailFragment"
         android:label="DetailFragment"
         tools:layout="@layout/detail_fragment">
-        <argument
-            android:name="selected"
-            app:argType="com.example.mvvm_project.models.UserDetails" />
+<!--        <argument-->
+<!--            android:name="selected"-->
+<!--            app:argType="com.example.mvvm_project.models.UserDetails" />-->
     </fragment>
 </navigation>

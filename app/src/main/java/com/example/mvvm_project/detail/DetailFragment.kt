@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import androidx.viewpager.widget.ViewPager
 
@@ -43,14 +44,21 @@ class DetailFragment : Fragment() {
         detailViewModel = ViewModelProviders.of(this, detailViewModelFactory).get(DetailViewModel::class.java)
         sharedModel = activity.run { ViewModelProviders.of(this!!).get(OverviewViewModel::class.java) }
 
+
+        sharedModel.getItems().observe(viewLifecycleOwner, Observer {
+            detailViewModel.setList(sharedModel.getItems().value as PagedList<UserDetails>)
+        })
+
+        //detailViewModel.setList(sharedModel.usersLiveData.value as PagedList<UserDetails>)
+
         viewPager = view.findViewById(R.id.viewPager)
-
-        detailViewModel.setList(sharedModel.usersLiveData.value as PagedList<UserDetails>)
-        pagerAdapter = FragmentPagerAdapter(detailViewModel.pagedList.value!!)
-        pagerAdapter.notifyDataSetChanged()
-
-        viewPager.adapter = pagerAdapter
-        viewPager.currentItem = detailViewModel.getSelectedValue()
+        detailViewModel.pagedList.observe(viewLifecycleOwner, Observer {
+            pagerAdapter = FragmentPagerAdapter(it)
+            viewPager.adapter = pagerAdapter
+            pagerAdapter.notifyDataSetChanged()
+            viewPager.currentItem = detailViewModel.getSelectedValue()
+        })
+        //pagerAdapter = FragmentPagerAdapter(detailViewModel.pagedList.value!!)
         //user can swipe to see other repo details now
         return view
     }

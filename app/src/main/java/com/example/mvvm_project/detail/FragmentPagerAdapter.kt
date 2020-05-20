@@ -25,7 +25,6 @@ class FragmentPagerAdapter(val users: ArrayList<UserDetails>) : PagerAdapter() {
         val view = LayoutInflater.from(container.context)
             .inflate(R.layout.detail_item_view, container, false)
 
-        //var user = users[pos]
         var user = users.get(position)
 
         //loading image in the view

@@ -1,12 +1,14 @@
 package com.example.mvvm_project.overview
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
@@ -20,6 +22,8 @@ import com.example.mvvm_project.models.UserDetails
 class OverviewFragment() : Fragment() {
 
     private lateinit var adapter: UserAdapter
+    private lateinit var progressBar : ProgressBar
+
 
     companion object {
         fun newInstance() = OverviewFragment()
@@ -35,50 +39,45 @@ class OverviewFragment() : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.overview_fragment, container, false)
+        progressBar = view?.findViewById<ProgressBar>(R.id.progress)!!
         val rv = view?.findViewById<RecyclerView>(R.id.recyclerView_list)
-        rv?.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        rv?.layoutManager = layoutManager
         rv?.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         adapter = UserAdapter(this)
         rv?.adapter = adapter
 
-        addDataToList()
 
-        rv?.addOnScrollListener(object :
-            PaginationScrollListener(
-                layoutManager = LinearLayoutManager(
-                    context,
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
-            ) {
-            override fun onLoadMore() {
-                addDataToList()
+        rv?.addOnScrollListener(object : PaginationScrollListener(layoutManager) {
+            override fun onLoadMore(pageNum: Int) {
+                addDataToList(pageNum)
             }
         })
+        
 
         viewModel.getItems().observe(viewLifecycleOwner, Observer {
             //Callback received only some data present
-            adapter.users = it
+            if(it == null) progressBar?.visibility = View.GONE
+            adapter.addList(it as ArrayList<UserDetails>)
             adapter.notifyDataSetChanged()
         })
 
         return view
     }
 
-    private fun addDataToList() {
-        val progressBar = view?.findViewById<ProgressBar>(R.id.progress)
+    private fun addDataToList(pageNumber: Int) {
         progressBar?.visibility = View.VISIBLE
-
-        //add data from consecutive api
-
-        adapter.notifyDataSetChanged()
-        progressBar?.visibility = View.GONE
+        Handler().postDelayed(Runnable {
+            viewModel.getUserProperties(pageNumber)
+            progressBar?.visibility = View.INVISIBLE
+        }, 1500)
     }
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.getUserProperties()
+        //1st request
+        viewModel.getUserProperties(1)
     }
 
     fun onItemClick(users: List<UserDetails>, adapterPosition: Int) {

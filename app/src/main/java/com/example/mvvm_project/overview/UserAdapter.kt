@@ -11,11 +11,15 @@ import kotlinx.android.synthetic.main.list.view.*
 
 class UserAdapter(var clickListener: OverviewFragment) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
-    var users: List<UserDetails> = ArrayList<UserDetails>()
-        set(value) {
-            field = value
-        }
+    private var users: ArrayList<UserDetails> = ArrayList<UserDetails>()
+//        set(value) {
+//            field = value
+//        }
 
+
+    fun addList(list : ArrayList<UserDetails>) {
+        users.addAll(list)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserAdapter.UserViewHolder {
         return UserViewHolder(
             LayoutInflater.from(parent.context).inflate(

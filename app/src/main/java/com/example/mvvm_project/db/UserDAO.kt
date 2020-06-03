@@ -1,5 +1,5 @@
 package com.example.mvvm_project.db
-//
+
 //import androidx.lifecycle.LiveData
 //import androidx.room.Dao
 //import androidx.room.Insert
@@ -12,6 +12,6 @@ package com.example.mvvm_project.db
 //    @Insert
 //    fun saveUser(user: UserDetails)
 //
-//    @Query("Select * from UserDetails")
+//    @Query("Select * from user_database")
 //    fun readUser() : LiveData<List<UserDetails>>
 //}

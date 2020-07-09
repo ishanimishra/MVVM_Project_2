@@ -14,23 +14,25 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mvvm_project.BaseFragment
 import com.example.mvvm_project.R
+import com.example.mvvm_project.db.appDB
 import com.example.mvvm_project.models.UserDetails
+import kotlinx.coroutines.*
 
-
-class OverviewFragment() : Fragment() {
+class OverviewFragment() : BaseFragment() {
 
     private lateinit var adapter: UserAdapter
     private lateinit var progressBar : ProgressBar
-
+    private lateinit var viewModel : OverviewViewModel
 
     companion object {
         fun newInstance() = OverviewFragment()
     }
 
-    private val viewModel: OverviewViewModel by lazy {
-        ViewModelProviders.of(this).get(OverviewViewModel::class.java)
-    }
+//    private val viewModel: OverviewViewModel by lazy {
+//        ViewModelProviders.of(this).get(OverviewViewModel::class.java)
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +40,7 @@ class OverviewFragment() : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.overview_fragment, container, false)
+        viewModel = ViewModelProviders.of(this).get(OverviewViewModel::class.java)
         progressBar = view?.findViewById<ProgressBar>(R.id.progress)!!
         val rv = view?.findViewById<RecyclerView>(R.id.recyclerView_list)
         val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -54,12 +57,46 @@ class OverviewFragment() : Fragment() {
         })
         
 
-        viewModel.getItems().observe(viewLifecycleOwner, Observer {
-            //Callback received only some data present
-            if(it == null) progressBar?.visibility = View.GONE
-            adapter.addList(it as ArrayList<UserDetails>)
-            adapter.notifyDataSetChanged()
-        })
+//        viewModel.getItems().observe(viewLifecycleOwner, Observer {
+//            //Callback received only some data present
+//            if(it == null) progressBar?.visibility = View.GONE
+//            adapter.addList(it as ArrayList<UserDetails>)
+//            adapter.notifyDataSetChanged()
+//        })
+
+            launch {
+                context?.let {
+                    val user = viewModel.getUserDao().readUser()
+                    //val user = appDB(it).userDAO().readUser()
+                    adapter.addList(user as ArrayList<UserDetails>)
+                    adapter.notifyDataSetChanged()
+                }
+//                adapter.addList(viewModel.getUserDao().readUser() as ArrayList<UserDetails>)
+//                adapter.notifyDataSetChanged()
+            }
+//            adapter.addList(viewModel.getUserDao().readUser() as ArrayList<UserDetails>)
+//            adapter.notifyDataSetChanged()
+
+
+
+
+//        try{
+//            withContext(Dispatchers.IO) {
+//                adapter.addList(viewModel.getUserDao().readUser() as ArrayList<UserDetails>)
+//                adapter.notifyDataSetChanged()
+//            }
+//        } catch (e: Exception) {
+//        }
+
+
+
+
+
+//        viewModel.getUserDao().readUser().observe(viewLifecycleOwner, Observer {
+//            if(it == null) progressBar?.visibility = View.GONE
+//            adapter.addList(it as ArrayList<UserDetails>)
+//            adapter.notifyDataSetChanged()
+//        })
 
         return view
     }

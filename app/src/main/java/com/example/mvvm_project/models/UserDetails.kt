@@ -25,10 +25,11 @@ import kotlinx.android.parcel.Parcelize
 //) : Parcelable
 
 
-@Parcelize
-@Entity(tableName = "user_database")
+
+@Entity(tableName = "user_database") @Parcelize
 data class UserDetails(
-    @PrimaryKey val name: String,
+    @PrimaryKey(autoGenerate = true) val id : Int,
+    val name: String,
     val full_name: String,
     @Embedded
     val owner: Owner,

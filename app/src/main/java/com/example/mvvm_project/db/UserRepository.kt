@@ -1,6 +1,5 @@
 package com.example.mvvm_project.db
 
-//import android.os.AsyncTask
 //import androidx.lifecycle.LiveData
 //import com.example.mvvm_project.models.UserDetails
 //

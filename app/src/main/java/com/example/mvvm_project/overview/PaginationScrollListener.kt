@@ -1,6 +1,5 @@
 package com.example.mvvm_project.overview
 
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -13,30 +12,6 @@ abstract class PaginationScrollListener(var layoutManager: LinearLayoutManager) 
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-//        val visibleItemCount = layoutManager.childCount
-//        val totalItemCount = layoutManager.itemCount
-//        val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-//
-//        if(loading) {
-//            if(totalItemCount > prevTotal) {
-//                loading = false
-//                prevTotal = totalItemCount
-//            }
-//        }
-//
-//        var visibleThreshold = 7
-//
-//        if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItemPosition + visibleThreshold)) {
-//            //end has been reached
-//            if(pageNum > 5) {
-//                loading = false
-//                //Toast.makeText(this,"List end",Toast.LENGTH_SHORT).show()
-//            }
-//            else {
-//                onLoadMore(pageNum++)
-//                loading = true
-//            }
-//        }
     }
 
     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -60,7 +35,6 @@ abstract class PaginationScrollListener(var layoutManager: LinearLayoutManager) 
                 //end has been reached
                 if(pageNum > 5) {
                     loading = false
-                    //Toast.makeText(this,"List end",Toast.LENGTH_SHORT).show()
                 }
                 else {
                     onLoadMore(pageNum++)

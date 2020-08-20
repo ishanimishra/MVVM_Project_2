@@ -30,10 +30,6 @@ class OverviewFragment() : BaseFragment() {
         fun newInstance() = OverviewFragment()
     }
 
-//    private val viewModel: OverviewViewModel by lazy {
-//        ViewModelProviders.of(this).get(OverviewViewModel::class.java)
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,14 +51,6 @@ class OverviewFragment() : BaseFragment() {
                 addDataToList(pageNum)
             }
         })
-        
-
-//        viewModel.getItems().observe(viewLifecycleOwner, Observer {
-//            //Callback received only some data present
-//            if(it == null) progressBar?.visibility = View.GONE
-//            adapter.addList(it as ArrayList<UserDetails>)
-//            adapter.notifyDataSetChanged()
-//        })
 
             launch {
                 context?.let {
@@ -71,33 +59,7 @@ class OverviewFragment() : BaseFragment() {
                     adapter.addList(user as ArrayList<UserDetails>)
                     adapter.notifyDataSetChanged()
                 }
-//                adapter.addList(viewModel.getUserDao().readUser() as ArrayList<UserDetails>)
-//                adapter.notifyDataSetChanged()
             }
-//            adapter.addList(viewModel.getUserDao().readUser() as ArrayList<UserDetails>)
-//            adapter.notifyDataSetChanged()
-
-
-
-
-//        try{
-//            withContext(Dispatchers.IO) {
-//                adapter.addList(viewModel.getUserDao().readUser() as ArrayList<UserDetails>)
-//                adapter.notifyDataSetChanged()
-//            }
-//        } catch (e: Exception) {
-//        }
-
-
-
-
-
-//        viewModel.getUserDao().readUser().observe(viewLifecycleOwner, Observer {
-//            if(it == null) progressBar?.visibility = View.GONE
-//            adapter.addList(it as ArrayList<UserDetails>)
-//            adapter.notifyDataSetChanged()
-//        })
-
         return view
     }
 

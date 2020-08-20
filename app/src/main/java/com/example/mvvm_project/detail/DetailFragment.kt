@@ -48,7 +48,6 @@ class DetailFragment : Fragment() {
         viewPager.setCurrentItem(pos)
         pagerAdapter.notifyDataSetChanged()
 
-        //user can swipe to see other repo details now
         return view
     }
 }

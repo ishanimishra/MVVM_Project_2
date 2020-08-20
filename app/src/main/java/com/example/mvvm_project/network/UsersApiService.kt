@@ -52,10 +52,8 @@ interface UsersApiService {
     @GET("5ec26f822f00007aa8c352b6")
     fun getProperties5Async():
             Deferred<List<UserDetails>>
-    
-    // for response
-    // fun getP(@Query("since") since: Int) : Response<List<UserDetails>>
 }
+
 //a public object called UsersApi to expose the Retrofit service to the rest of the app
 object UsersApi {
     val retrofitService: UsersApiService by lazy {

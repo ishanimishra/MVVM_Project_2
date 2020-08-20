@@ -12,10 +12,6 @@ import kotlinx.android.synthetic.main.list.view.*
 class UserAdapter(var clickListener: OverviewFragment) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     private var users: ArrayList<UserDetails> = ArrayList<UserDetails>()
-//        set(value) {
-//            field = value
-//        }
-
 
     fun addList(list : ArrayList<UserDetails>) {
         users.addAll(list)
